@@ -1,57 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_application_30/core/constants/color_manager.dart';
 import 'package:flutter_application_30/core/constants/style_manager.dart';
 import 'package:flutter_application_30/data/models/product_model.dart';
+import 'package:flutter_application_30/presentation/home/viewmodel/home_screen_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProductDetailScreen extends StatefulWidget {
+class ProductDetailScreen extends ConsumerWidget {
   final ProductModel product;
 
   const ProductDetailScreen({super.key, required this.product});
 
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final favoriteProducts = ref
+        .watch(favoriteProductsProvider)
+        .maybeWhen(
+          data: (products) => products,
+          orElse: () => <ProductModel>[],
+        );
+    final isFavorite = favoriteProducts.any(
+      (favorite) => favorite.id == product.id,
+    );
+    final colorScheme = Theme.of(context).colorScheme;
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  bool _isFavorite = false;
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorManager.whiteColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: ColorManager.whiteColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         leading: GestureDetector(
           onTap: () => Navigator.pop(context),
           child: Icon(
             Icons.arrow_back_ios_new,
-            color: ColorManager.secondary,
+            color: colorScheme.onSurface,
             size: 20.sp,
           ),
         ),
         title: Text(
           'Product Details',
-          style: getRegularStyle18_600(color: ColorManager.secondary),
+          style: getRegularStyle18_600(color: colorScheme.onSurface),
         ),
         centerTitle: true,
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 16.w),
             child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _isFavorite = !_isFavorite;
-                });
+              onTap: () async {
+                final isNowFavorite = await ref
+                    .read(favoriteProductsProvider.notifier)
+                    .toggleFavorite(product);
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        isNowFavorite
+                            ? 'Added to favorites'
+                            : 'Removed from favorites',
+                      ),
+                      duration: const Duration(seconds: 1),
+                    ),
+                  );
+                }
               },
               child: Icon(
-                _isFavorite
+                isFavorite
                     ? Icons.favorite_rounded
                     : Icons.favorite_outline_rounded,
-                color: _isFavorite
+                color: isFavorite
                     ? ColorManager.redColor
-                    : ColorManager.secondary,
+                    : colorScheme.onSurface,
                 size: 24.sp,
               ),
             ),
@@ -66,17 +84,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Container(
               height: 300.h,
               width: double.infinity,
-              color: ColorManager.grey100,
+              color: colorScheme.surfaceContainerHighest,
               child: Center(
                 child: Image.network(
-                  widget.product.image,
+                  product.image,
                   fit: BoxFit.contain,
                   errorBuilder: (context, error, stackTrace) {
                     return Center(
                       child: Icon(
                         Icons.image_not_supported_outlined,
                         size: 60.sp,
-                        color: ColorManager.grey400,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     );
                   },
@@ -112,7 +130,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                     child: Text(
-                      widget.product.category.toUpperCase(),
+                      product.category.toUpperCase(),
                       style: getLightStyle12_400(
                         color: ColorManager.categoryTagText,
                       ),
@@ -121,8 +139,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   SizedBox(height: 12.h),
                   // ============= Product Title ===============
                   Text(
-                    widget.product.title,
-                    style: getRegularStyle20_600(color: ColorManager.secondary),
+                    product.title,
+                    style: getRegularStyle20_600(color: colorScheme.onSurface),
                   ),
                   SizedBox(height: 16.h),
                   // Rating and Reviews Row
@@ -137,18 +155,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                           SizedBox(width: 8.w),
                           Text(
-                            widget.product.rating.rate.toStringAsFixed(1),
+                            product.rating.rate.toStringAsFixed(1),
                             style: getRegularStyle16_600(
-                              color: ColorManager.secondary,
+                              color: colorScheme.onSurface,
                             ),
                           ),
                         ],
                       ),
                       SizedBox(width: 16.w),
                       Text(
-                        '(${widget.product.rating.count} reviews)',
+                        '(${product.rating.count} reviews)',
                         style: getLightStyle14_400(
-                          color: ColorManager.typography300,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -158,7 +176,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Container(
                     padding: EdgeInsets.all(16.w),
                     decoration: BoxDecoration(
-                      color: ColorManager.categoryTagBg,
+                      color: colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: Row(
@@ -167,11 +185,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         Text(
                           'Price',
                           style: getLightStyle14_400(
-                            color: ColorManager.secondary,
+                            color: colorScheme.onSurface,
                           ),
                         ),
                         Text(
-                          '\$${widget.product.price.toStringAsFixed(2)}',
+                          '\$${product.price.toStringAsFixed(2)}',
                           style: getRegularStyle20_600(
                             color: ColorManager.priceColor,
                           ),
@@ -183,13 +201,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   // ============= Description Section ==============
                   Text(
                     'Description',
-                    style: getRegularStyle18_600(color: ColorManager.secondary),
+                    style: getRegularStyle18_600(color: colorScheme.onSurface),
                   ),
                   SizedBox(height: 8.h),
                   Text(
-                    widget.product.description,
+                    product.description,
                     style: getLightStyle14_400(
-                      color: ColorManager.typography300,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                     textAlign: TextAlign.justify,
                   ),
@@ -203,7 +221,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              '${widget.product.title} added to cart',
+                              '${product.title} added to cart',
                               style: getLightStyle14_400(
                                 color: ColorManager.whiteColor,
                               ),

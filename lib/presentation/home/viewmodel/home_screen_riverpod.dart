@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_application_30/data/models/product_model.dart';
 import 'package:flutter_application_30/data/repositories/product_repository.dart';
+import 'package:flutter_application_30/data/resources/caches/shared_preferences.dart';
 
 final productRepositoryProvider = Provider<ProductRepository>((ref) {
   return ProductRepository();
@@ -45,3 +46,39 @@ final filteredProductsProvider = Provider<AsyncValue<List<ProductModel>>>((
     error: (e, st) => AsyncValue.error(e, st),
   );
 });
+
+class FavoriteProductsNotifier extends AsyncNotifier<List<ProductModel>> {
+  @override
+  Future<List<ProductModel>> build() {
+    return SharedPreferenceData.getFavoriteProducts();
+  }
+
+  Future<bool> toggleFavorite(ProductModel product) async {
+    final loadedProducts = state.maybeWhen<List<ProductModel>?>(
+      data: (products) => products,
+      orElse: () => null,
+    );
+    final currentProducts =
+        loadedProducts ?? await SharedPreferenceData.getFavoriteProducts();
+    final isAlreadyFavorite = currentProducts.any((p) => p.id == product.id);
+    final updatedProducts = isAlreadyFavorite
+        ? currentProducts.where((p) => p.id != product.id).toList()
+        : [...currentProducts, product];
+
+    state = AsyncValue.data(updatedProducts);
+    await SharedPreferenceData.saveFavoriteProducts(updatedProducts);
+    return !isAlreadyFavorite;
+  }
+
+  bool isFavorite(int productId) {
+    return state.maybeWhen(
+      data: (products) => products.any((product) => product.id == productId),
+      orElse: () => false,
+    );
+  }
+}
+
+final favoriteProductsProvider =
+    AsyncNotifierProvider<FavoriteProductsNotifier, List<ProductModel>>(
+      FavoriteProductsNotifier.new,
+    );

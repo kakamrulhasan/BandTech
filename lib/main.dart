@@ -20,6 +20,25 @@ class MainApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
+          themeMode: ThemeMode.system,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color(0xFF27AE60),
+              brightness: Brightness.light,
+            ),
+            scaffoldBackgroundColor: Colors.white,
+            cardColor: const Color(0xFFFAFAFA),
+            useMaterial3: true,
+          ),
+          darkTheme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color(0xFF27AE60),
+              brightness: Brightness.dark,
+            ),
+            scaffoldBackgroundColor: const Color(0xFF101412),
+            cardColor: const Color(0xFF18201B),
+            useMaterial3: true,
+          ),
           home: const HomeScreen(),
         );
       },
