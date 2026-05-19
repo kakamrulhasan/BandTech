@@ -3,8 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 
 class ResposeHandle {
-
-   static dynamic handleResponse(Response response) {
+  static dynamic handleResponse(Response response) {
     try {
       if (response.statusCode == 200 || response.statusCode == 201) {
         log("Success: ${response.data}");
