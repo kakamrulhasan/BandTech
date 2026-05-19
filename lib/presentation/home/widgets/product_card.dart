@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_30/core/constants/color_manager.dart';
 import 'package:flutter_application_30/core/constants/style_manager.dart';
-import 'package:flutter_application_30/data/static_data.dart';
+import 'package:flutter_application_30/data/models/product_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductCard extends StatelessWidget {
-  final Product product;
+  final ProductModel product;
   final VoidCallback onTap;
 
   const ProductCard({super.key, required this.product, required this.onTap});
@@ -21,7 +21,7 @@ class ProductCard extends StatelessWidget {
           border: Border.all(color: ColorManager.cardBorder, width: 1),
           boxShadow: [
             BoxShadow(
-              color: ColorManager.secondary.withOpacity(0.08),
+              color: ColorManager.secondary.withValues(alpha: 0.08),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -127,7 +127,7 @@ class ProductCard extends StatelessWidget {
                           ),
                           SizedBox(width: 4.w),
                           Text(
-                            product.rating.toStringAsFixed(1),
+                            product.rating.rate.toStringAsFixed(1),
                             style: getLightStyle12_400(
                               color: ColorManager.secondary,
                             ),

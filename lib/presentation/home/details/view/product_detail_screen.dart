@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_30/core/constants/color_manager.dart';
 import 'package:flutter_application_30/core/constants/style_manager.dart';
-import 'package:flutter_application_30/data/static_data.dart';
+import 'package:flutter_application_30/data/models/product_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  final Product product;
+  final ProductModel product;
 
   const ProductDetailScreen({super.key, required this.product});
 
@@ -137,7 +137,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                           SizedBox(width: 8.w),
                           Text(
-                            widget.product.rating.toStringAsFixed(1),
+                            widget.product.rating.rate.toStringAsFixed(1),
                             style: getRegularStyle16_600(
                               color: ColorManager.secondary,
                             ),
@@ -146,7 +146,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                       SizedBox(width: 16.w),
                       Text(
-                        '(${widget.product.reviewCount} reviews)',
+                        '(${widget.product.rating.count} reviews)',
                         style: getLightStyle14_400(
                           color: ColorManager.typography300,
                         ),
