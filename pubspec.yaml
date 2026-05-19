@@ -7,9 +7,11 @@ environment:
   sdk: ^3.10.1
 
 dependencies:
+  dio: ^5.9.2
   flutter:
     sdk: flutter
-  flutter_screenutil: ^{latest version}
+  flutter_screenutil: ^5.9.0
+  shared_preferences: ^2.5.5
 
 dev_dependencies:
   flutter_test:

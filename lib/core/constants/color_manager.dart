@@ -29,4 +29,12 @@ class ColorManager {
   static const Color blueColor = Colors.blue;
   static const Color redColor = Colors.red;
   static const Color whiteColor = Colors.white;
+
+  // Product Card Colors
+  static const Color cardBackground = Color(0xFFFAFAFA);
+  static const Color cardBorder = Color(0xFFE8E8E8);
+  static const Color priceColor = Color(0xFF27AE60);
+  static const Color ratingColor = Color(0xFFF39C12);
+  static const Color categoryTagBg = Color(0xFFEBF5FB);
+  static const Color categoryTagText = Color(0xFF2E86C1);
 }
