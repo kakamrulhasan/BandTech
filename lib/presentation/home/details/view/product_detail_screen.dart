@@ -22,24 +22,24 @@ class ProductDetailScreen extends ConsumerWidget {
     final isFavorite = favoriteProducts.any(
       (favorite) => favorite.id == product.id,
     );
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: ColorManager.scaffoldBackground(context),
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: ColorManager.scaffoldBackground(context),
         elevation: 0,
         leading: GestureDetector(
           onTap: () => Navigator.pop(context),
           child: Icon(
             Icons.arrow_back_ios_new,
-            color: colorScheme.onSurface,
+            color: ColorManager.textPrimary(context),
             size: 20.sp,
           ),
         ),
         title: Text(
           'Product Details',
-          style: getRegularStyle18_600(color: colorScheme.onSurface),
+          style: getRegularStyle18_600(
+            color: ColorManager.textPrimary(context),
+          ),
         ),
         centerTitle: true,
         actions: [
@@ -69,7 +69,7 @@ class ProductDetailScreen extends ConsumerWidget {
                     : Icons.favorite_outline_rounded,
                 color: isFavorite
                     ? ColorManager.redColor
-                    : colorScheme.onSurface,
+                    : ColorManager.textPrimary(context),
                 size: 24.sp,
               ),
             ),
@@ -84,7 +84,7 @@ class ProductDetailScreen extends ConsumerWidget {
             Container(
               height: 300.h,
               width: double.infinity,
-              color: colorScheme.surfaceContainerHighest,
+              color: ColorManager.elevatedSurface(context),
               child: Center(
                 child: Image.network(
                   product.image,
@@ -94,7 +94,7 @@ class ProductDetailScreen extends ConsumerWidget {
                       child: Icon(
                         Icons.image_not_supported_outlined,
                         size: 60.sp,
-                        color: colorScheme.onSurfaceVariant,
+                        color: ColorManager.textSecondary(context),
                       ),
                     );
                   },
@@ -140,7 +140,9 @@ class ProductDetailScreen extends ConsumerWidget {
                   // ============= Product Title ===============
                   Text(
                     product.title,
-                    style: getRegularStyle20_600(color: colorScheme.onSurface),
+                    style: getRegularStyle20_600(
+                      color: ColorManager.textPrimary(context),
+                    ),
                   ),
                   SizedBox(height: 16.h),
                   // Rating and Reviews Row
@@ -157,7 +159,7 @@ class ProductDetailScreen extends ConsumerWidget {
                           Text(
                             product.rating.rate.toStringAsFixed(1),
                             style: getRegularStyle16_600(
-                              color: colorScheme.onSurface,
+                              color: ColorManager.textPrimary(context),
                             ),
                           ),
                         ],
@@ -166,7 +168,7 @@ class ProductDetailScreen extends ConsumerWidget {
                       Text(
                         '(${product.rating.count} reviews)',
                         style: getLightStyle14_400(
-                          color: colorScheme.onSurfaceVariant,
+                          color: ColorManager.textSecondary(context),
                         ),
                       ),
                     ],
@@ -176,7 +178,7 @@ class ProductDetailScreen extends ConsumerWidget {
                   Container(
                     padding: EdgeInsets.all(16.w),
                     decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainerHighest,
+                      color: ColorManager.elevatedSurface(context),
                       borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: Row(
@@ -185,7 +187,7 @@ class ProductDetailScreen extends ConsumerWidget {
                         Text(
                           'Price',
                           style: getLightStyle14_400(
-                            color: colorScheme.onSurface,
+                            color: ColorManager.textPrimary(context),
                           ),
                         ),
                         Text(
@@ -201,13 +203,15 @@ class ProductDetailScreen extends ConsumerWidget {
                   // ============= Description Section ==============
                   Text(
                     'Description',
-                    style: getRegularStyle18_600(color: colorScheme.onSurface),
+                    style: getRegularStyle18_600(
+                      color: ColorManager.textPrimary(context),
+                    ),
                   ),
                   SizedBox(height: 8.h),
                   Text(
                     product.description,
                     style: getLightStyle14_400(
-                      color: colorScheme.onSurfaceVariant,
+                      color: ColorManager.textSecondary(context),
                     ),
                     textAlign: TextAlign.justify,
                   ),

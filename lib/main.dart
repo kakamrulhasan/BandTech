@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_30/core/constants/color_manager.dart';
 import 'package:flutter_application_30/presentation/home/view/home_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,20 +24,20 @@ class MainApp extends StatelessWidget {
           themeMode: ThemeMode.system,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color(0xFF27AE60),
+              seedColor: ColorManager.appSeedColor,
               brightness: Brightness.light,
             ),
-            scaffoldBackgroundColor: Colors.white,
-            cardColor: const Color(0xFFFAFAFA),
+            scaffoldBackgroundColor: ColorManager.whiteColor,
+            cardColor: ColorManager.cardBackground,
             useMaterial3: true,
           ),
           darkTheme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color(0xFF27AE60),
+              seedColor: ColorManager.appSeedColor,
               brightness: Brightness.dark,
             ),
-            scaffoldBackgroundColor: const Color(0xFF101412),
-            cardColor: const Color(0xFF18201B),
+            scaffoldBackgroundColor: ColorManager.darkScaffoldBackground,
+            cardColor: ColorManager.darkCardBackground,
             useMaterial3: true,
           ),
           home: const HomeScreen(),

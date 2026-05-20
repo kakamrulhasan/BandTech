@@ -20,15 +20,13 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
+          color: ColorManager.cardSurface(context),
           borderRadius: BorderRadius.circular(8.r),
-          border: Border.all(color: colorScheme.outlineVariant, width: 1),
+          border: Border.all(color: ColorManager.border(context), width: 1),
           boxShadow: [
             BoxShadow(
               color: ColorManager.secondary.withValues(alpha: 0.08),
@@ -50,7 +48,7 @@ class ProductCard extends StatelessWidget {
                       topLeft: Radius.circular(12.r),
                       topRight: Radius.circular(12.r),
                     ),
-                    color: colorScheme.surfaceContainerHighest,
+                    color: ColorManager.elevatedSurface(context),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.only(
@@ -65,7 +63,7 @@ class ProductCard extends StatelessWidget {
                           child: Icon(
                             Icons.image_not_supported_outlined,
                             size: 40.sp,
-                            color: colorScheme.onSurfaceVariant,
+                            color: ColorManager.textSecondary(context),
                           ),
                         );
                       },
@@ -93,7 +91,9 @@ class ProductCard extends StatelessWidget {
                       width: 34.w,
                       height: 34.w,
                       decoration: BoxDecoration(
-                        color: colorScheme.surface.withValues(alpha: 0.92),
+                        color: ColorManager.surface(
+                          context,
+                        ).withValues(alpha: 0.92),
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
@@ -111,7 +111,7 @@ class ProductCard extends StatelessWidget {
                             : Icons.favorite_outline_rounded,
                         color: isFavorite
                             ? ColorManager.redColor
-                            : colorScheme.onSurfaceVariant,
+                            : ColorManager.textSecondary(context),
                         size: 19.sp,
                       ),
                     ),
@@ -148,7 +148,9 @@ class ProductCard extends StatelessWidget {
                   // Product Title
                   Text(
                     product.title,
-                    style: getLightStyle14_500(color: colorScheme.onSurface),
+                    style: getLightStyle14_500(
+                      color: ColorManager.textPrimary(context),
+                    ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -176,7 +178,7 @@ class ProductCard extends StatelessWidget {
                           Text(
                             product.rating.rate.toStringAsFixed(1),
                             style: getLightStyle12_400(
-                              color: colorScheme.onSurface,
+                              color: ColorManager.textPrimary(context),
                             ),
                           ),
                         ],
