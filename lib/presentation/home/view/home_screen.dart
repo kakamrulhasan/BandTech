@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_application_30/core/constants/color_manager.dart';
 import 'package:flutter_application_30/core/constants/style_manager.dart';
 import 'package:flutter_application_30/data/models/product_model.dart';
 import 'package:flutter_application_30/presentation/home/widgets/product_card.dart';
@@ -72,10 +73,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           data: (products) => products,
           orElse: () => <ProductModel>[],
         );
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: ColorManager.scaffoldBackground(context),
       body: SafeArea(
         child: Column(
           children: [
@@ -86,7 +85,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 children: [
                   Text(
                     'BrandTECH',
-                    style: getBoldStyle24(color: colorScheme.onSurface),
+                    style: getBoldStyle24(
+                      color: ColorManager.textPrimary(context),
+                    ),
                   ),
                   IconButton(
                     onPressed: () {
@@ -99,7 +100,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     },
                     icon: Icon(
                       Icons.favorite_outline_rounded,
-                      color: colorScheme.onSurface,
+                      color: ColorManager.textPrimary(context),
                     ),
                   ),
                 ],
@@ -109,10 +110,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Container(
                 decoration: BoxDecoration(
-                  color: colorScheme.surfaceContainerHighest,
+                  color: ColorManager.elevatedSurface(context),
                   borderRadius: BorderRadius.circular(12.r),
                   border: Border.all(
-                    color: colorScheme.outlineVariant,
+                    color: ColorManager.border(context),
                     width: 1,
                   ),
                 ),
@@ -121,25 +122,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   decoration: InputDecoration(
                     hintText: 'Search products or category...',
                     hintStyle: getLightStyle14_400(
-                      color: colorScheme.onSurfaceVariant,
+                      color: ColorManager.textSecondary(context),
                     ),
                     border: InputBorder.none,
                     prefixIcon: Icon(
                       Icons.search,
-                      color: colorScheme.onSurfaceVariant,
+                      color: ColorManager.textSecondary(context),
                     ),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? GestureDetector(
                             onTap: _clearSearch,
                             child: Icon(
                               Icons.clear,
-                              color: colorScheme.onSurfaceVariant,
+                              color: ColorManager.textSecondary(context),
                             ),
                           )
                         : null,
                     contentPadding: EdgeInsets.symmetric(vertical: 12.h),
                   ),
-                  style: getLightStyle14_400(color: colorScheme.onSurface),
+                  style: getLightStyle14_400(
+                    color: ColorManager.textPrimary(context),
+                  ),
                 ),
               ),
             ),
@@ -155,20 +158,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           Icon(
                             Icons.shopping_bag_outlined,
                             size: 64.sp,
-                            color: colorScheme.onSurfaceVariant,
+                            color: ColorManager.textSecondary(context),
                           ),
                           SizedBox(height: 16.h),
                           Text(
                             'No products found',
                             style: getRegularStyle18_600(
-                              color: colorScheme.onSurface,
+                              color: ColorManager.textPrimary(context),
                             ),
                           ),
                           SizedBox(height: 8.h),
                           Text(
                             'Try searching with different keywords',
                             style: getLightStyle14_400(
-                              color: colorScheme.onSurfaceVariant,
+                              color: ColorManager.textSecondary(context),
                             ),
                           ),
                         ],
@@ -222,20 +225,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           Icon(
                             Icons.wifi_off,
                             size: 56.sp,
-                            color: colorScheme.onSurfaceVariant,
+                            color: ColorManager.textSecondary(context),
                           ),
                           SizedBox(height: 16.h),
                           Text(
                             'Failed to load products',
                             style: getRegularStyle18_600(
-                              color: colorScheme.onSurface,
+                              color: ColorManager.textPrimary(context),
                             ),
                           ),
                           SizedBox(height: 8.h),
                           Text(
                             e.toString(),
                             style: getLightStyle14_400(
-                              color: colorScheme.onSurfaceVariant,
+                              color: ColorManager.textSecondary(context),
                             ),
                             textAlign: TextAlign.center,
                           ),

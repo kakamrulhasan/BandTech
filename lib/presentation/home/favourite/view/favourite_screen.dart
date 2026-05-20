@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_application_30/core/constants/color_manager.dart';
 import 'package:flutter_application_30/core/constants/style_manager.dart';
 import 'package:flutter_application_30/presentation/home/details/view/product_detail_screen.dart';
 import 'package:flutter_application_30/presentation/home/viewmodel/home_screen_riverpod.dart';
@@ -12,17 +13,18 @@ class FavouriteScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final favoritesAsync = ref.watch(favoriteProductsProvider);
-    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: ColorManager.scaffoldBackground(context),
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: ColorManager.scaffoldBackground(context),
         elevation: 0,
-        iconTheme: IconThemeData(color: colorScheme.onSurface),
+        iconTheme: IconThemeData(color: ColorManager.textPrimary(context)),
         title: Text(
           'Favorites',
-          style: getRegularStyle18_600(color: colorScheme.onSurface),
+          style: getRegularStyle18_600(
+            color: ColorManager.textPrimary(context),
+          ),
         ),
         centerTitle: true,
       ),
@@ -38,20 +40,20 @@ class FavouriteScreen extends ConsumerWidget {
                     Icon(
                       Icons.favorite_outline_rounded,
                       size: 64.sp,
-                      color: colorScheme.onSurfaceVariant,
+                      color: ColorManager.textSecondary(context),
                     ),
                     SizedBox(height: 16.h),
                     Text(
                       'No favorites yet',
                       style: getRegularStyle18_600(
-                        color: colorScheme.onSurface,
+                        color: ColorManager.textPrimary(context),
                       ),
                     ),
                     SizedBox(height: 8.h),
                     Text(
                       'Tap the heart on a product to save it here',
                       style: getLightStyle14_400(
-                        color: colorScheme.onSurfaceVariant,
+                        color: ColorManager.textSecondary(context),
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -107,7 +109,9 @@ class FavouriteScreen extends ConsumerWidget {
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Text(
               'Failed to load favorites: $e',
-              style: getLightStyle14_400(color: colorScheme.onSurfaceVariant),
+              style: getLightStyle14_400(
+                color: ColorManager.textSecondary(context),
+              ),
               textAlign: TextAlign.center,
             ),
           ),

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 class ColorManager {
   ColorManager._();
   static const Color primary = Colors.white;
+  static const Color appSeedColor = Color(0xFF27AE60);
+  static const Color darkScaffoldBackground = Color(0xFF101412);
+  static const Color darkCardBackground = Color(0xFF18201B);
   static const Color primary600 = Color(0xFF54A312);
   static const Color primary700 = Color(0xFF408308);
   static const Color secondary = Colors.black;
@@ -37,4 +40,32 @@ class ColorManager {
   static const Color ratingColor = Color(0xFFF39C12);
   static const Color categoryTagBg = Color(0xFFEBF5FB);
   static const Color categoryTagText = Color(0xFF2E86C1);
+
+  static Color scaffoldBackground(BuildContext context) {
+    return Theme.of(context).scaffoldBackgroundColor;
+  }
+
+  static Color cardSurface(BuildContext context) {
+    return Theme.of(context).cardColor;
+  }
+
+  static Color surface(BuildContext context) {
+    return Theme.of(context).colorScheme.surface;
+  }
+
+  static Color elevatedSurface(BuildContext context) {
+    return Theme.of(context).colorScheme.surfaceContainerHighest;
+  }
+
+  static Color border(BuildContext context) {
+    return Theme.of(context).colorScheme.outlineVariant;
+  }
+
+  static Color textPrimary(BuildContext context) {
+    return Theme.of(context).colorScheme.onSurface;
+  }
+
+  static Color textSecondary(BuildContext context) {
+    return Theme.of(context).colorScheme.onSurfaceVariant;
+  }
 }
